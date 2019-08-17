@@ -1,45 +1,46 @@
-const showData = require("../../data/shows.json");
-const characterData = require("../../data/characters.json");
+let showData = require("../../data/shows.js");
 
 const createShows = (knex, show) => {
-  return knex("shows").insert(
-    {
-      title: show.title,
-      date: show.date,
-      tv_source: show.tv_source,
-      cover_image: show.cover_image
-    },
-    "id"
-  )
+  return knex("shows")
+    .insert(
+      {
+        title: show.title,
+        date: show.date,
+        tv_source: show.tv_source,
+        cover_image: show.cover_image
+      },
+      "id"
+    )
+    .then(showId => {
+      let charPromises = [];
+      show.characters.forEach(char => {
+        charPromises.push(
+          createChar(knex, {
+            char_name: char.char_name,
+            ethnicity: char.ethnicity,
+            name: char.name,
+            show_id: showId[0]
+          })
+        );
+      });
+      return Promise.all(charPromises);
+    });
 };
 
-const createCharacters = (knex, char) => {
-  return knex("characters").insert({
-    char_name: char.char_name,
-    ethnicity: char.ethnicity,
-    name: char.name
-  });
+const createChar = (knex, char) => {
+  return knex("characters").insert(char);
 };
 
 exports.seed = knex => {
-  return knex("shows")
+  return knex("characters")
     .del()
-    .then(() => knex("characters").del())
+    .then(() => knex("shows").del())
     .then(() => {
-      const showsPromises = [];
+      let showPromises = [];
       showData.forEach(show => {
-        console.log(show);
-        showsPromises.push(createShows(knex, show));
+        showPromises.push(createShows(knex, show));
       });
-      return Promise.all(showsPromises);
+      return Promise.all(showPromises);
     })
-    .catch(err => console.log(`Problem seeding data. ${err}`))
-    .then(() => {
-      const charactersPromises = [];
-      characterData.forEach(char => {
-        charactersPromises.push(createCharacters(knex, char));
-      });
-      return Promise.all(charactersPromises);
-    })
-    .catch(err => console.log(`Problem seeding data. ${err}`));
+    .catch(error => console.log(`Error seeding data: ${error}`));
 };
