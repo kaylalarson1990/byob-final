@@ -1,4 +1,4 @@
-let shows = [
+let showsList = [
   {
     title: "The Office",
     date: "March 24, 2005",
@@ -563,4 +563,4 @@ let shows = [
   }
 ];
 
-module.exports = shows;
+module.exports = showsList;

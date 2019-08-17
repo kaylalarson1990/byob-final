@@ -1,4 +1,6 @@
-let showData = require("../../data/shows.js");
+let showData = require("../data/shows.js");
+// let characterData = require("../data/characters.js");
+
 
 const createShows = (knex, show) => {
   return knex("shows")
@@ -19,7 +21,7 @@ const createShows = (knex, show) => {
             char_name: char.char_name,
             ethnicity: char.ethnicity,
             name: char.name,
-            show_id: showId[0]
+            show_id: showId.id
           })
         );
       });
@@ -44,3 +46,34 @@ exports.seed = knex => {
     })
     .catch(error => console.log(`Error seeding data: ${error}`));
 };
+
+
+
+// exports.seed = (knex, Promise) => {
+//   return knex('characters').del()
+//   .then(() => {
+//     return knex('shows').del()
+//   })
+//   .then(() => {
+//     return knex('shows').insert(showData)
+//   })
+//   .then(() => {
+//     let charPromises = [];
+//     characterData.forEach((char) => {
+//       charPromises.push(createChar(knex, char))
+//     })
+//     return Promise.all(charPromises)
+//   })
+// }
+
+// const createChar = (knex, char) => {
+//   return knex("shows").where("id", char.show_id).first()
+//   .then((show) => {
+//     return knex("characters").insert({
+//       char_name: char.char_name,
+//             ethnicity: char.ethnicity,
+//             name: char.name,
+//             show_id: showId.id
+//     })
+//   })
+// }

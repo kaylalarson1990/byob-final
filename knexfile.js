@@ -5,12 +5,11 @@ module.exports = {
     migrations: {
       directory: "./migrations"
     },
-    seeds: {
-      directory: "./seeds/dev"
-    },
     useNullAsDefault: true
   },
-
+  seeds: {
+    directory: "./seeds/dev"
+  },
   production: {
     client: "pg",
     connection: process.env.DATABASE_URL + `?ssl=true`,
