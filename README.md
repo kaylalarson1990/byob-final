@@ -1,6 +1,7 @@
 # Description
 
 BYOB (Build your own backend) was an individual project done in 7 days. I created my own data set using a one-to-many relationship. I have my "one" being tv-shows and my "many" being the main characters on each show. Learning goals were to create a RESTful api using NodeJS Express, PostgreSQL, and Knex.
+[Heroku Deployment Link](https://shows-characters.herokuapp.com/api/v1/shows)
 
 ## Technologies
 
@@ -38,7 +39,6 @@ Run ```npm start``` - visit localhost:3000/api/users - you should see a json res
 
 Note: All of these endpoints will return semantic errors if something is wrong with the request.
 
-[Heroku Deployment Link](https://afternoon-springs-70039.herokuapp.com/api/v1/shows)
 
 ## Setup Postgresql
 
