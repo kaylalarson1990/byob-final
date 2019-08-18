@@ -21,7 +21,7 @@ Clone down the repo - https://github.com/kaylalarson1990/byob-final
 
 Run ```npm install``` from the root directory
 
-Run ```npm start``` - visit localhost:3000/api/users - you should see a json response with a single user.
+Run ```npm start``` - visit localhost:3000/api/v1/shows - you should see a json response with all shows.
 
 ## Endpoints
 
