@@ -32,12 +32,11 @@ Run ```npm start``` - visit localhost:3000/api/users - you should see a json res
 | `http://localhost:3001/api/v1/shows/:id/characters` | GET | not needed | Array of characters for one specific show: `[{ id: 12, show_name: 'Friends', char_name: 'Rachel', ethnicity: 'American', name: 'Jennifer Anniston' }]` |
 | `http://localhost:3001/api/v1/shows` | POST | `{title: <String>, date: <String>, tv_source: <String>, cover_image: <String>, characters: <String>}` | New show: `{ id: 12, title: 'Friends', date: 'August 18, 2019', tv_source: 'Netflix', cover_image: 'https://friends.com', characters: [{}] }` |
 | `http://localhost:3001/api/v1/shows/:id/characters` | POST | `{show_name: <String>, char_name: <String>, ethnicity: <String>, name: <String>}` | New character: `{ id: 12, show_name: 'Friends', char_name: 'Rachel', ethnicity: 'American', name: 'Jennifer Anniston' }` |
+| `http://localhost:3001/api/v1/shows/:id/characters` | POST | `{show_name: <String>, char_name: <String>, ethnicity: <String>, name: <String>}` | New character: `{ id: 12, show_name: 'Friends', char_name: 'Rachel', ethnicity: 'American', name: 'Jennifer Anniston' }` |
 | `http://localhost:3001/api/v1/shows/:id` | DELETE | not needed | Delete show: `{
-    "success": "You have successfully deleted the show & characters associated with the id of 387"
+    success: 'You have successfully deleted the show & characters associated with the id of 387'
 }` |
-| `http://localhost:3001/api/v1/shows/:id/characters/:id` | DELETE | not needed | Delete character: `{
-    "success": "You have successfully deleted the character associated with the id of 418"
-}` |
+| `http://localhost:3001/api/v1/shows/:id/characters/:id` | DELETE | not needed | New character: `{ success: 'You have successfully deleted the character associated with the id of 418' }` |
 
 Note: All of these endpoints will return semantic errors if something is wrong with the request.
 
