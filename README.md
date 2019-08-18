@@ -1,4 +1,28 @@
-# Endpoints
+# Description
+
+BYOB was an individual project done in 7 days. I created my own data set using a one-to-many relationship. I have my "one" being tv-shows and my "many" being the main characters on each show. Learning goals were to create a RESTful api using NodeJS Express, PostgreSQL, and Knex.
+
+## Technologies
+
+- Express
+- Knex
+- PostgreSQL
+
+## Learning Objectives
+
+- build RESTful API for a large dataset
+- one-to-many relational database schema design
+- deploy API to Heroku
+
+## Installation
+### (If you do not have PostgreSQL, please see instructions at the bottom for installation)
+Clone down the back-end repo - https://github.com/turingschool-examples/movie-tracker.git
+
+Run ```npm install``` from the root directory
+
+Run ```npm start``` - visit localhost:3000/api/users - you should see a json response with a single user.
+
+### Endpoints
 
 | url | verb | options | sample response |
 | ----|------|---------|---------------- |
@@ -10,4 +34,12 @@
 | `http://localhost:3001/api/v1/shows/:id/characters` | POST |`{show_name: <String>, char_name: <String>, ethnicity: <String>, name: <String>}` | New character: `{ id: 12, show_name: 'Friends', char_name: 'Rachel', ethnicity: 'American', name: 'Jennifer Anniston' }` |
 
 Note: All of these endpoints will return semantic errors if something is wrong with the request.
+
+## Setup Postgresql
+
+#### Installation:
+* Head over to [Postgres.app](http://postgresapp.com/) to download and install PostgreSQL
+* When you click `initialize`, you should now be able to see that postgreSQL is running
+* To be able to use the command line tools, you will need to run the following commannd in your terminal to configure your $PATH `sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
+* You will need to close your terminal window and re-open it for the changes to take effect
 
