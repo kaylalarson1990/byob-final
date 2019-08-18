@@ -3,6 +3,7 @@ let showData = require("../data/shows.js");
 const createShows = (knex, show) => {
   return knex("shows")
     .insert(
+      // this is allowing for knex to insert the data from the data set, in the way the "shows" table/schema requested it be
       {
         title: show.title,
         date: show.date,
@@ -14,13 +15,14 @@ const createShows = (knex, show) => {
     .then(showId => {
       let charPromises = [];
       show.characters.forEach(char => {
+        // this is iterating through the character data and pushing them into a new array with the data requested in the table/schema
         charPromises.push(
           createChar(knex, {
             char_name: char.char_name,
             show_name: char.show_name,
             ethnicity: char.ethnicity,
             name: char.name,
-            show_id: showId[0]
+            show_id: showId[0] // giving me a link to the primary key of the shows
           })
         );
       });
@@ -45,32 +47,3 @@ exports.seed = knex => {
     })
     .catch(error => console.log(`Error seeding data: ${error}`));
 };
-
-// exports.seed = (knex, Promise) => {
-//   return knex('characters').del()
-//   .then(() => {
-//     return knex('shows').del()
-//   })
-//   .then(() => {
-//     return knex('shows').insert(showData)
-//   })
-//   .then(() => {
-//     let charPromises = [];
-//     characterData.forEach((char) => {
-//       charPromises.push(createChar(knex, char))
-//     })
-//     return Promise.all(charPromises)
-//   })
-// }
-
-// const createChar = (knex, char) => {
-//   return knex("shows").where("id", char.show_id).first()
-//   .then((show) => {
-//     return knex("characters").insert({
-//       char_name: char.char_name,
-//             ethnicity: char.ethnicity,
-//             name: char.name,
-//             show_id: showId.id
-//     })
-//   })
-// }
