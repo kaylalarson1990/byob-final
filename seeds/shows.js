@@ -1,7 +1,11 @@
 let showData = require("../data/shows.js");
+// pulling in the data created
+
+// the seeds file iterates through the pulled in data of shows and characters
+// this sets up the characters to be connected via the show_id (connection happens in the GET endpoint)
 
 const createShows = (knex, show) => {
-  return knex("shows")
+  return knex("shows") //knex creates promises
     .insert(
       // this is allowing for knex to insert the data from the data set, in the way the "shows" table/schema requested it be
       {
@@ -13,7 +17,7 @@ const createShows = (knex, show) => {
       "id"
     )
     .then(showId => {
-      let charPromises = [];
+      let charPromises = []; // creating an empty array to push the created data into
       show.characters.forEach(char => {
         // this is iterating through the character data and pushing them into a new array with the data requested in the table/schema
         charPromises.push(
@@ -36,7 +40,7 @@ const createChar = (knex, char) => {
 
 exports.seed = knex => {
   return knex("characters")
-    .del()
+    .del() // this is going to delete characters first because they are connected to the shows - we don't want to have characters floating around if show has been deleted
     .then(() => knex("shows").del())
     .then(() => {
       let showPromises = [];
