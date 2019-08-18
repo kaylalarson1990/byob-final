@@ -17,6 +17,7 @@ const createShows = (knex, show) => {
         charPromises.push(
           createChar(knex, {
             char_name: char.char_name,
+            show_name: char.show_name,
             ethnicity: char.ethnicity,
             name: char.name,
             show_id: showId[0]
