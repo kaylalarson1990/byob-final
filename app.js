@@ -10,10 +10,14 @@ app.set("port", process.env.PORT || 3000);
 
 app.get("/api/v1/shows", (req, res) => {
   database("shows")
-    .select("*")
+    .select()
     // pass in the name of the table. this is connecting knex to show our data
     .then(shows => {
-      res.status(200).json(shows);
+      if (shows.length) {
+        res.status(200).json(shows);
+      } else {
+        res.status(404).json("No shows found");
+      }
     })
     .catch(
       error =>
@@ -23,42 +27,74 @@ app.get("/api/v1/shows", (req, res) => {
 });
 
 app.get("/api/v1/characters", (req, res) => {
-    database("characters")
-      .select("*")
-      // pass in the name of the table. this is connecting knex to show our data
-      .then(characters => {
+  database("characters")
+    .select()
+    // pass in the name of the table. this is connecting knex to show our data
+    .then(characters => {
+      if (characters.length) {
         res.status(200).json(characters);
-      })
-      .catch(
-        error =>
-          res.status(500).json({ error: error.message, stack: error.stack })
-        // creating the error message if anything goes wrong with pulling the data
-      );
-  });
+      } else {
+        res.status(404).json("No characters found");
+      }
+    })
+    .catch(
+      error =>
+        res.status(500).json({ error: error.message, stack: error.stack })
+      // creating the error message if anything goes wrong with pulling the data
+    );
+});
 
 app.get("/api/v1/shows/:id", (req, res) => {
-  const { id } = req.params;
   database("shows")
-    .select("*")
+    .where("id", req.params.id)
+    .select()
     .limit(1)
-    .where({ id: id })
-    .then(shows => res.status(200).json(shows))
+    .then(shows => {
+      if (shows.length) {
+          database("characters").where("show_id", req.params.id).select()
+          .then(characters => {
+              shows[0].characters = characters
+              res.status(200).json(shows[0]);
+          })
+      } else {
+        res.status(404).json({
+          error: `No shows found with id: ${req.params.id}`
+        });
+      }
+    })
     .catch(error =>
       res.status(500).json({ error: error.message, stack: error.stack })
     ); // creating the error message if anything goes wrong with pulling the data
 });
 
-app.get("/api/v1/characters/:id", (req, res) => {
-    const { id } = req.params;
-    database("characters")
-      .select("*")
-      .limit(1)
-      .where({ id: id })
-      .then(characters => res.status(200).json(characters))
-      .catch(error =>
-        res.status(500).json({ error: error.message, stack: error.stack })
-      ); // creating the error message if anything goes wrong with pulling the data
-  });
+app.get("/api/v1/shows/:id/characters", (req, res) => {
+  database('characters').where('show_id', req.params.id).select()
+    .then((characters) => {
+    //   if(characters.length) {
+      res.status(200).json(characters)
+    //   } else {
+    //     res.status(404).json('No characters found for this show')
+    //   }
+    })
+      .catch((error) => {
+        res.status(500).json({ error});
+      }) // creating the error message if anything goes wrong with pulling the data
+});
+
+
+app.get('/api/v1/shows/:id/characters/:show_id', (req, res) => {
+    database('characters').where('author_id', req.params.id).andWhere('id', req.params.show_id).select()
+      .then((characters) => {
+        if(characters.length) {
+        res.status(200).json(characters)
+        } else {
+          res.status(404).json(`No character with this id: ${req.params.id} was found`)
+        }
+      })
+        .catch((error) => {
+          res.status(500).json({ error })
+        })
+  })
 
 app.listen(app.get("port"), () => {
   console.log(
