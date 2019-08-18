@@ -35,6 +35,8 @@ Run ```npm start``` - visit localhost:3000/api/users - you should see a json res
 
 Note: All of these endpoints will return semantic errors if something is wrong with the request.
 
+[Heroku Deployment Link](https://afternoon-springs-70039.herokuapp.com/api/v1/shows)
+
 ## Setup Postgresql
 
 #### Installation:
