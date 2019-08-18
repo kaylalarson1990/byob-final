@@ -22,7 +22,7 @@ Run ```npm install``` from the root directory
 
 Run ```npm start``` - visit localhost:3000/api/users - you should see a json response with a single user.
 
-### Endpoints
+## Endpoints
 
 | url | verb | options | sample response |
 | ----|------|---------|---------------- |
