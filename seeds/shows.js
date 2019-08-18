@@ -3,7 +3,6 @@ let showData = require("../data/shows.js");
 const createShows = (knex, show) => {
   return knex("shows")
     .insert(
-      // this is allowing for knex to insert the data from the data set, in the way the "shows" table/schema requested it be
       {
         title: show.title,
         date: show.date,
@@ -15,14 +14,13 @@ const createShows = (knex, show) => {
     .then(showId => {
       let charPromises = [];
       show.characters.forEach(char => {
-        // this is iterating through the character data and pushing them into a new array with the data requested in the table/schema
         charPromises.push(
           createChar(knex, {
             char_name: char.char_name,
             show_name: char.show_name,
             ethnicity: char.ethnicity,
             name: char.name,
-            show_id: showId[0] // giving me a link to the primary key of the shows
+            show_id: showId[0]
           })
         );
       });

@@ -6,13 +6,10 @@ const app = express();
 app.use(express.json());
 
 app.set("port", process.env.PORT || 3000);
-// app.use(morgan(process.env.NODE_ENV !== "production" ? "dev" : "combined")); // allows you to get a log of your http requests in terminal
 
-// GET endpoint that returns all shows data
 app.get("/api/v1/shows", (req, res) => {
   database("shows")
     .select()
-    // pass in the name of the table. this is connecting knex to show our data
     .then(shows => {
       if (shows.length) {
         res.status(200).json(shows);
@@ -23,15 +20,12 @@ app.get("/api/v1/shows", (req, res) => {
     .catch(
       error =>
         res.status(500).json({ error: error.message, stack: error.stack })
-      // creating the error message if anything goes wrong with pulling the data
     );
 });
 
-// GET endpoint that returns all characters data
 app.get("/api/v1/characters", (req, res) => {
   database("characters")
     .select()
-    // pass in the name of the table. this is connecting knex to show our data
     .then(characters => {
       if (characters.length) {
         res.status(200).json(characters);
@@ -42,11 +36,9 @@ app.get("/api/v1/characters", (req, res) => {
     .catch(
       error =>
         res.status(500).json({ error: error.message, stack: error.stack })
-      // creating the error message if anything goes wrong with pulling the data
     );
 });
 
-// GET endpoint that returns one show based off inputed id
 app.get("/api/v1/shows/:id", (req, res) => {
   database("shows")
     .where("id", req.params.id)
@@ -69,10 +61,9 @@ app.get("/api/v1/shows/:id", (req, res) => {
     })
     .catch(error =>
       res.status(500).json({ error: error.message, stack: error.stack })
-    ); // creating the error message if anything goes wrong with pulling the data
+    );
 });
 
-// GET endpoint that returns all characters for one show based off inputed id
 app.get("/api/v1/shows/:id/characters", (req, res) => {
   database("characters")
     .where("show_id", req.params.id)
@@ -86,10 +77,9 @@ app.get("/api/v1/shows/:id/characters", (req, res) => {
     })
     .catch(error => {
       res.status(500).json({ error });
-    }); // creating the error message if anything goes wrong with pulling the data
+    });
 });
 
-// GET endpoint that returns one character for one show based off inputed id's
 app.get("/api/v1/shows/:id/characters/:show_id", (req, res) => {
   database("characters")
     .where("show_id", req.params.id)
@@ -107,7 +97,6 @@ app.get("/api/v1/shows/:id/characters/:show_id", (req, res) => {
     });
 });
 
-// POST endpoint for adding a new show
 app.post("/api/v1/shows", (req, res) => {
   let show = req.body;
   for (let requiredParameter of [
@@ -133,7 +122,6 @@ app.post("/api/v1/shows", (req, res) => {
     });
 });
 
-// POST endpoint for adding a character to a specific show
 app.post("/api/v1/shows/:id/characters", (req, res) => {
   let character = req.body;
   for (let requiredParameter of [
@@ -160,12 +148,12 @@ app.post("/api/v1/shows/:id/characters", (req, res) => {
 });
 
 app.delete("/api/v1/shows/:id", (req, res) => {
-  const { id } = req.params; // destructuring the id's from the params of the request
+  const { id } = req.params; 
   const deleteShow = [
-    database("characters") // this is making sure that the characters associated with the primary key of the show also gets deleted
+    database("characters") 
       .where("show_id", id)
       .del(),
-    database("shows") // deleting the show based on it's primary key id
+    database("shows")
       .where("id", id)
       .del()
   ];
@@ -181,9 +169,9 @@ app.delete("/api/v1/shows/:id", (req, res) => {
 });
 
 app.delete("/api/v1/shows/:id/characters/:id", (req, res) => {
-  const { id } = req.params; // destructuring the id's from the params of the request
+  const { id } = req.params; 
   const deleteShow = [
-    database("characters") // deleting the character based on it's primary key id
+    database("characters")
       .where("id", id)
       .del()
   ];
