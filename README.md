@@ -16,7 +16,7 @@ BYOB (Build your own backend) was an individual project done in 7 days. I create
 
 ## Installation
 ### (If you do not have PostgreSQL, please see instructions at the bottom for installation)
-Clone down the back-end repo - https://github.com/turingschool-examples/movie-tracker.git
+Clone down the repo - https://github.com/kaylalarson1990/byob-final
 
 Run ```npm install``` from the root directory
 
